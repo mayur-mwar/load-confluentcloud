@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TOPICS=(orders-raw marketdata-raw ORDERS_REKEY stock-trades MARKETDATA_TOTAL_RUNNING MARKETDATA_TABLE )
+
+for topic in ${TOPICS[*]}; do
+    docker-compose exec kafka \
+        kafka-topics --bootstrap-server kafka:9091 \
+        --create \
+        --topic ${topic} \
+        --partitions 6 \
+        --replication-factor 3
+done
